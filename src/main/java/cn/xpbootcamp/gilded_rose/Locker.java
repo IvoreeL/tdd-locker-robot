@@ -14,11 +14,10 @@ public class Locker {
         this.size = size;
     }
 
-    public Locker() {
-        this(19);
-    }
-
-    public Ticket saveBag(Bag bag) {
+    public Ticket saveBag(Bag bag) throws LockerFullException {
+        if (storage.size() >= size){
+            throw new LockerFullException();
+        }
         Ticket ticket = new Ticket();
         storage.put(ticket, bag);
         return ticket;

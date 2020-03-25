@@ -7,7 +7,7 @@
   * given a locker with one empty room when save a bag then user would get a ticket
   * given a locker with one empty room when save nothing then user would get a ticket  
 * 柜子满了，用户不能存包，没有票据但会得到错误提示
-  * given a full locker when save a bag then user would get error message ('Locker is full.')
+  * given a full locker when save a bag then user would get error message ('柜子已满')
 
 
 
