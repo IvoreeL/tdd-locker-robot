@@ -57,4 +57,15 @@ class LockerTest {
         String errorMessage = "票据无效";
         assertThrows(InvalidTicketException.class, ()->locker.retrieveBag(new Ticket()), errorMessage);
     }
+
+    @Test
+    void should_get_error_message_given_an_used_ticket_when_retrieve_bag() throws LockerFullException, InvalidTicketException {
+        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+        Bag savedBag = new Bag();
+        Ticket ticket = locker.saveBag(savedBag);
+        Bag retrievedBag = locker.retrieveBag(ticket);
+        String errorMessage = "票据无效";
+        assertSame(savedBag,retrievedBag);
+        assertThrows(InvalidTicketException.class, ()->locker.retrieveBag(ticket), errorMessage);
+    }
 }
