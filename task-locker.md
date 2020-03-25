@@ -15,17 +15,5 @@
 
 * 用户根据票据可以成功取包
   * given a valid ticket when retrieve bag then user would get the bag.
-  * given an invalid ticket when retrieve bag then user would get error message('ticket is invalid').
-  * given an used ticket when retrieve bag then user would get error message('ticket is invalid').
-
-
-
-
-
-
-
-Questions:
-
-1. 柜子是否有容量限制？
-2. 柜子满了的错误提示信息
-3. 不符合要求票据的错误提示信息
+  * given an invalid ticket when retrieve bag then user would get error message('票据无效').
+  * given an used ticket when retrieve bag then user would get error message('票据无效').
