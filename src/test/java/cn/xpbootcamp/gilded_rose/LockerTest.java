@@ -41,11 +41,20 @@ class LockerTest {
     }
 
     @Test
-    void should_get_the_bag_given_a_valid_ticket_when_retrieve_bag() throws LockerFullException {
+    void should_get_the_bag_given_a_valid_ticket_when_retrieve_bag() throws LockerFullException, InvalidTicketException {
         Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
         Bag savedBag = new Bag();
         Ticket ticket = locker.saveBag(savedBag);
         Bag retrievedBag = locker.retrieveBag(ticket);
         assertSame(savedBag,retrievedBag);
+    }
+
+    @Test
+    void should_get_error_message_given_an_invalid_ticket_when_retrieve_bag() throws LockerFullException {
+        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+        Bag savedBag = new Bag();
+        locker.saveBag(savedBag);
+        String errorMessage = "票据无效";
+        assertThrows(InvalidTicketException.class, ()->locker.retrieveBag(new Ticket()), errorMessage);
     }
 }

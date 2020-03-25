@@ -23,7 +23,10 @@ public class Locker {
         return ticket;
     }
 
-    public Bag retrieveBag(Ticket ticket){
+    public Bag retrieveBag(Ticket ticket) throws InvalidTicketException {
+        if (!storage.containsKey(ticket)){
+            throw new InvalidTicketException();
+        }
         return storage.remove(ticket);
     }
 }
