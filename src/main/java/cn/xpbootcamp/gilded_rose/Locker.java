@@ -22,4 +22,8 @@ public class Locker {
         storage.put(ticket, bag);
         return ticket;
     }
+
+    public Bag retrieveBag(Ticket ticket){
+        return storage.remove(ticket);
+    }
 }
