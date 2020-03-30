@@ -8,14 +8,14 @@ import java.util.Map;
 public class Locker {
 
     private Map<Ticket, Bag> storage = new HashMap<>();
-    private int size;
+    private int capacity;
 
-    public Locker(int size) {
-        this.size = size;
+    public Locker(int capacity) {
+        this.capacity = capacity;
     }
 
-    public Ticket saveBag(Bag bag) throws LockerFullException {
-        if (storage.size() >= size){
+    public Ticket save(Bag bag) throws LockerFullException {
+        if (storage.size() >= capacity){
             throw new LockerFullException();
         }
         Ticket ticket = new Ticket();
@@ -23,7 +23,7 @@ public class Locker {
         return ticket;
     }
 
-    public Bag retrieveBag(Ticket ticket) throws InvalidTicketException {
+    public Bag retrieve(Ticket ticket) throws InvalidTicketException {
         if (!storage.containsKey(ticket)){
             throw new InvalidTicketException();
         }

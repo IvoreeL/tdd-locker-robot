@@ -6,66 +6,61 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LockerTest {
 
-    private final int DEFAULT_LOCKER_SIZE = 19;
+    private final int DEFAULT_LOCKER_CAPACITY = 19;
 
     @Test
-    void should_get_a_ticket_given_an_empty_locker_when_save_bag() throws LockerFullException {
-        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+    void should_get_a_ticket_when_save_bag_given_an_empty_locker() throws LockerFullException {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag bag = new Bag();
-        Ticket ticket = locker.saveBag(bag);
+        Ticket ticket = locker.save(bag);
         assertNotNull(ticket);
     }
 
     @Test
-    void should_get_a_ticket_given_a_locker_with_one_empty_room_when_save_bag() throws LockerFullException {
+    void should_get_two_different_tickets_when_user_save_twice_given_empty_locker() throws LockerFullException {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
+        Bag bag = new Bag();
+        Bag anotherBag = new Bag();
+        Ticket ticket = locker.save(bag);
+        Ticket anotherTicket = locker.save(anotherBag);
+        assertNotEquals(ticket, anotherTicket);
+    }
+
+    @Test
+    void should_get_an_error_message_when_save_bag_given_a_full_locker() throws LockerFullException {
         Locker locker = new Locker(1);
         Bag bag = new Bag();
-        Ticket ticket = locker.saveBag(bag);
-        assertNotNull(ticket);
-    }
-
-    @Test
-    void should_get_a_ticket_given_a_locker_with_one_empty_room_when_save_nothing() throws LockerFullException {
-        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
-        Bag nothing = null;
-        Ticket ticket = locker.saveBag(nothing);
-        assertNotNull(ticket);
-    }
-
-    @Test
-    void should_get_an_error_message_given_a_full_locker_when_save_bag() {
-        Locker locker = new Locker(0);
-        Bag bag = new Bag();
+        locker.save(bag);
         String errorMessage = "柜子已满!";
-        assertThrows(LockerFullException.class, ()->locker.saveBag(bag), errorMessage);
+        assertThrows(LockerFullException.class, ()->locker.save(bag), errorMessage);
     }
 
     @Test
-    void should_get_the_bag_given_a_valid_ticket_when_retrieve_bag() throws LockerFullException, InvalidTicketException {
-        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+    void should_get_the_bag_when_retrieve_bag_given_a_valid_ticket() throws LockerFullException, InvalidTicketException {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
-        Ticket ticket = locker.saveBag(savedBag);
-        Bag retrievedBag = locker.retrieveBag(ticket);
+        Ticket ticket = locker.save(savedBag);
+        Bag retrievedBag = locker.retrieve(ticket);
         assertSame(savedBag,retrievedBag);
     }
 
     @Test
-    void should_get_error_message_given_an_invalid_ticket_when_retrieve_bag() throws LockerFullException {
-        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+    void should_get_error_message_when_retrieve_bag_given_an_invalid_ticket() throws LockerFullException {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
-        locker.saveBag(savedBag);
+        locker.save(savedBag);
         String errorMessage = "票据无效";
-        assertThrows(InvalidTicketException.class, ()->locker.retrieveBag(new Ticket()), errorMessage);
+        assertThrows(InvalidTicketException.class, ()->locker.retrieve(new Ticket()), errorMessage);
     }
 
     @Test
-    void should_get_error_message_given_an_used_ticket_when_retrieve_bag() throws LockerFullException, InvalidTicketException {
-        Locker locker = new Locker(DEFAULT_LOCKER_SIZE);
+    void should_get_error_message_when_retrieve_bag_given_an_used_ticket() throws LockerFullException, InvalidTicketException {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
-        Ticket ticket = locker.saveBag(savedBag);
-        Bag retrievedBag = locker.retrieveBag(ticket);
+        Ticket ticket = locker.save(savedBag);
+        Bag retrievedBag = locker.retrieve(ticket);
         String errorMessage = "票据无效";
         assertSame(savedBag,retrievedBag);
-        assertThrows(InvalidTicketException.class, ()->locker.retrieveBag(ticket), errorMessage);
+        assertThrows(InvalidTicketException.class, ()->locker.retrieve(ticket), errorMessage);
     }
 }
