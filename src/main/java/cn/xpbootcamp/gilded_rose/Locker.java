@@ -29,4 +29,12 @@ public class Locker {
         }
         return storage.remove(ticket);
     }
+
+    public boolean contains(Bag bag) {
+        return storage.containsValue(bag);
+    }
+
+    public boolean isAvailable() {
+        return storage.size() < capacity;
+    }
 }
