@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
-
 class LockerRobotTest {
 
     private final static int NUMBER_ONE = 0;
@@ -71,14 +68,22 @@ class LockerRobotTest {
         assertThrows(InvalidTicketException.class, () -> lockerRobot.retrieve(new Ticket()), "票据无效");
     }
 
-    // given an used ticket when retrieves bag then user would get error message('票据无效').
-    // given a robot who manages one full locker(capacity: 1, locker 1) and a empty locker(capacity: 1, locker 2) when retrieve the bag in locker 1 and save a bag then user would get a ticket and the bag would be saved in locker 1
-
     @Test
     void should_get_error_message_when_retrieves_bag_given_an_used_ticket() {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Ticket ticket = lockerRobot.save(new Bag());
         lockerRobot.retrieve(ticket);
         assertThrows(InvalidTicketException.class, () -> lockerRobot.retrieve(ticket), "票据无效");
+    }
+
+    @Test
+    void should_save_bag_in_locker1_when_save_bag_after_retrieve_given_robot_with_one_full_and_one_empty() {
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
+        Ticket ticket = lockerRobot.save(new Bag());
+        lockerRobot.retrieve(ticket);
+        Bag bag = new Bag();
+        lockerRobot.save(bag);
+        Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
+        assertTrue(locker1.hasBag(bag));
     }
 }
