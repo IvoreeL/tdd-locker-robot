@@ -6,7 +6,7 @@ public class LockerRobot {
 
     private ArrayList<Locker> inChargedLockers;
 
-    public void inCharge(ArrayList<Locker> lockers) {
+    public void manage(ArrayList<Locker> lockers) {
         this.inChargedLockers = lockers;
     }
 

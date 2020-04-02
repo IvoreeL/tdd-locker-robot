@@ -21,7 +21,7 @@ public class LockerRobotHelper {
         lockers = new ArrayList<>();
         lockers.add(locker1);
         lockers.add(locker2);
-        lockerRobot.inCharge(lockers);
+        lockerRobot.manage(lockers);
         return this;
     }
 
