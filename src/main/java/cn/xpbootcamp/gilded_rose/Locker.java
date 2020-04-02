@@ -15,7 +15,7 @@ public class Locker {
     }
 
     public Ticket save(Bag bag) throws LockerFullException {
-        if (storage.size() >= capacity){
+        if (!isAvailable()){
             throw new LockerFullException();
         }
         Ticket ticket = new Ticket();

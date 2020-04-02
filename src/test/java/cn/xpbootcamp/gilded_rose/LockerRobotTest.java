@@ -17,35 +17,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // given a robot who manages one full locker(capacity: 1, locker 1) and a empty locker(capacity: 1, locker 2) when retrieve the bag in locker 1 and save a bag then user would get a ticket and the bag would be saved in locker 1
 
 class LockerRobotTest {
+
+    private final static int NUMBER_ONE = 0;
+    private final static int NUMBER_TWO = 1;
+
     @Test
     void should_get_a_ticket_and_the_bag_in_locker_1_when_save_a_bag_given_a_robot_with_two_empty_lockers() throws LockerFullException {
-        LockerRobot lockerRobot = new LockerRobot();
-        ArrayList<Locker> lockers = new ArrayList<>();
-        Locker locker1 = new Locker(1);
-        Locker locker2 = new Locker(1);
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Bag bag = new Bag();
-        lockers.add(locker1);
-        lockers.add(locker2);
-        lockerRobot.inCharge(lockers);
         Ticket ticket = lockerRobot.save(bag);
         assertNotNull(ticket);
+        Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
         assertTrue(locker1.contains(bag));
     }
 
     @Test
     void should_get_a_ticket_and_the_bag_in_locker_2_when_save_a_bag_given_a_robot_with_full_locker_and_empty_locker() throws LockerFullException {
-        LockerRobot lockerRobot = new LockerRobot();
-        ArrayList<Locker> lockers = new ArrayList<>();
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Bag bag = new Bag();
         Bag anotherBag = new Bag();
-        Locker locker1 = new Locker(1);
-        Locker locker2 = new Locker(1);
-        lockers.add(locker1);
-        lockers.add(locker2);
-        lockerRobot.inCharge(lockers);
         lockerRobot.save(bag);
         Ticket ticket = lockerRobot.save(anotherBag);
         assertNotNull(ticket);
+        Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertTrue(locker2.contains(anotherBag));
     }
 }

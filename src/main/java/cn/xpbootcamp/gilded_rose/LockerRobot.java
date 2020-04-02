@@ -16,4 +16,8 @@ public class LockerRobot {
                 .findFirst().orElseThrow(LockerFullException::new);
         return availableLocker.save(bag);
     }
+
+    public void setInChargedLockers(ArrayList<Locker> inChargedLockers) {
+        this.inChargedLockers = inChargedLockers;
+    }
 }
