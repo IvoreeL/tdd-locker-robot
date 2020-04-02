@@ -9,7 +9,7 @@ class LockerTest {
     private final int DEFAULT_LOCKER_CAPACITY = 19;
 
     @Test
-    void should_get_a_ticket_when_save_bag_given_an_empty_locker() throws LockerFullException {
+    void should_get_a_ticket_when_save_bag_given_an_empty_locker() {
         Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag bag = new Bag();
         Ticket ticket = locker.save(bag);
@@ -17,7 +17,7 @@ class LockerTest {
     }
 
     @Test
-    void should_get_two_different_tickets_when_user_save_twice_given_empty_locker() throws LockerFullException {
+    void should_get_two_different_tickets_when_user_save_twice_given_empty_locker() {
         Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag bag = new Bag();
         Bag anotherBag = new Bag();
@@ -27,7 +27,7 @@ class LockerTest {
     }
 
     @Test
-    void should_get_an_error_message_when_save_bag_given_a_full_locker() throws LockerFullException {
+    void should_get_an_error_message_when_save_bag_given_a_full_locker(){
         Locker locker = new Locker(1);
         Bag bag = new Bag();
         locker.save(bag);
@@ -36,7 +36,7 @@ class LockerTest {
     }
 
     @Test
-    void should_get_the_bag_when_retrieve_bag_given_a_valid_ticket() throws LockerFullException, InvalidTicketException {
+    void should_get_the_bag_when_retrieve_bag_given_a_valid_ticket() {
         Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
         Ticket ticket = locker.save(savedBag);
@@ -45,7 +45,7 @@ class LockerTest {
     }
 
     @Test
-    void should_get_error_message_when_retrieve_bag_given_an_invalid_ticket() throws LockerFullException {
+    void should_get_error_message_when_retrieve_bag_given_an_invalid_ticket(){
         Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
         locker.save(savedBag);
@@ -54,7 +54,7 @@ class LockerTest {
     }
 
     @Test
-    void should_get_error_message_when_retrieve_bag_given_an_used_ticket() throws LockerFullException, InvalidTicketException {
+    void should_get_error_message_when_retrieve_bag_given_an_used_ticket() {
         Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
         Bag savedBag = new Bag();
         Ticket ticket = locker.save(savedBag);

@@ -2,8 +2,6 @@ package cn.xpbootcamp.gilded_rose;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -15,28 +13,28 @@ class LockerRobotTest {
     private final static int NUMBER_TWO = 1;
 
     @Test
-    void should_get_a_ticket_and_the_bag_in_locker_1_when_save_a_bag_given_a_robot_with_two_empty_lockers() throws LockerFullException {
+    void should_get_a_ticket_and_the_bag_in_locker_1_when_save_a_bag_given_a_robot_with_two_empty_lockers() {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Bag bag = new Bag();
         Ticket ticket = lockerRobot.save(bag);
         Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
         assertNotNull(ticket);
-        assertTrue(locker1.contains(bag));
+        assertTrue(locker1.hasBag(bag));
     }
 
     @Test
-    void should_get_a_ticket_and_the_bag_in_locker_2_when_save_a_bag_given_a_robot_with_full_locker_and_empty_locker() throws LockerFullException {
+    void should_get_a_ticket_and_the_bag_in_locker_2_when_save_a_bag_given_a_robot_with_full_locker_and_empty_locker() {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         lockerRobot.save(new Bag());
         Bag bag = new Bag();
         Ticket ticket = lockerRobot.save(bag);
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertNotNull(ticket);
-        assertTrue(locker2.contains(bag));
+        assertTrue(locker2.hasBag(bag));
     }
 
     @Test
-    void should_get_two_tickets_and_bags_are_saved_in_order_given_a_robot_with_two_empty_lockers() throws LockerFullException {
+    void should_get_two_tickets_and_bags_are_saved_in_order_given_a_robot_with_two_empty_lockers() {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Bag bag = new Bag();
         Bag anotherBag = new Bag();
@@ -45,8 +43,8 @@ class LockerRobotTest {
         Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertNotEquals(ticket, anotherTicket);
-        assertTrue(locker1.contains(bag));
-        assertTrue(locker2.contains(anotherBag));
+        assertTrue(locker1.hasBag(bag));
+        assertTrue(locker2.hasBag(anotherBag));
     }
 
 // given a valid ticket when retrieves bag then user would get the bag.
@@ -56,10 +54,19 @@ class LockerRobotTest {
 
 
     @Test
-    void should_get_error_message_when_save_a_bag_given_a_robot_who_manages_2_full_lockers() throws LockerFullException {
+    void should_get_error_message_when_save_a_bag_given_a_robot_who_manages_2_full_lockers() {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         lockerRobot.save(new Bag());
         lockerRobot.save(new Bag());
         assertThrows(LockerFullException.class, () -> lockerRobot.save(new Bag()), "柜子已满");
+    }
+
+    @Test
+    void should_get_the_bag_when_user_retrieves_bag_given_a_valid_ticket() {
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
+        Bag savedBag = new Bag();
+        Ticket ticket = lockerRobot.save(savedBag);
+        Bag retrievedBag = lockerRobot.retrieve(ticket);
+        assertEquals(savedBag, retrievedBag);
     }
 }

@@ -14,7 +14,7 @@ public class Locker {
         this.capacity = capacity;
     }
 
-    public Ticket save(Bag bag) throws LockerFullException {
+    public Ticket save(Bag bag) {
         if (!isAvailable()){
             throw new LockerFullException();
         }
@@ -23,18 +23,22 @@ public class Locker {
         return ticket;
     }
 
-    public Bag retrieve(Ticket ticket) throws InvalidTicketException {
-        if (!storage.containsKey(ticket)){
+    public Bag retrieve(Ticket ticket){
+        if (!hasTicket(ticket)){
             throw new InvalidTicketException();
         }
         return storage.remove(ticket);
     }
 
-    public boolean contains(Bag bag) {
+    public boolean hasBag(Bag bag) {
         return storage.containsValue(bag);
     }
 
     public boolean isAvailable() {
         return storage.size() < capacity;
+    }
+
+    public boolean hasTicket(Ticket ticket) {
+        return storage.containsKey(ticket);
     }
 }
