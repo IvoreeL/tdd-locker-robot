@@ -47,7 +47,6 @@ class LockerRobotTest {
         assertTrue(locker2.hasBag(anotherBag));
     }
 
-// given a valid ticket when retrieves bag then user would get the bag.
 // given an invalid ticket when retrieves bag then user would get error message('票据无效').
 // given an used ticket when retrieves bag then user would get error message('票据无效').
 // given a robot who manages one full locker(capacity: 1, locker 1) and a empty locker(capacity: 1, locker 2) when retrieve the bag in locker 1 and save a bag then user would get a ticket and the bag would be saved in locker 1
@@ -68,5 +67,12 @@ class LockerRobotTest {
         Ticket ticket = lockerRobot.save(savedBag);
         Bag retrievedBag = lockerRobot.retrieve(ticket);
         assertEquals(savedBag, retrievedBag);
+    }
+
+    @Test
+    void should_get_error_message_when_retrieves_bag_given_an_invalid_ticket() {
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
+        lockerRobot.save(new Bag());
+        assertThrows(InvalidTicketException.class, ()->lockerRobot.retrieve(new Ticket()), "票据无效");
     }
 }
