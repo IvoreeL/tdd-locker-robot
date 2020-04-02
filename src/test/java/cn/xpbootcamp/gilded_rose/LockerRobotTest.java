@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 // given a robot who manages two empty lockers(capacity: 1) when save a bag then user would get a ticket and the bag would be saved in locker 1
 // given a robot who manages one full locker(capacity: 1, locker 1) and a empty locker(capacity: 1, locker 2) when save a bag then user would get a ticket and the bag would be saved in locker 2
@@ -40,6 +39,20 @@ class LockerRobotTest {
         Ticket ticket = lockerRobot.save(anotherBag);
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertNotNull(ticket);
+        assertTrue(locker2.contains(anotherBag));
+    }
+
+    @Test
+    void should_get_two_tickets_and_bags_are_saved_in_order_given_a_robot_with_two_empty_lockers() throws LockerFullException {
+        LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
+        Bag bag = new Bag();
+        Bag anotherBag = new Bag();
+        Ticket ticket = lockerRobot.save(bag);
+        Ticket anotherTicket = lockerRobot.save(anotherBag);
+        Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
+        Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
+        assertNotEquals(ticket, anotherTicket);
+        assertTrue(locker1.contains(bag));
         assertTrue(locker2.contains(anotherBag));
     }
 }
