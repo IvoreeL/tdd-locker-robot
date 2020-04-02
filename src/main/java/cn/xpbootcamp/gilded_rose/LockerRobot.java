@@ -17,7 +17,4 @@ public class LockerRobot {
         return availableLocker.save(bag);
     }
 
-    public void setInChargedLockers(ArrayList<Locker> inChargedLockers) {
-        this.inChargedLockers = inChargedLockers;
-    }
 }

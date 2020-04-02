@@ -26,8 +26,8 @@ class LockerRobotTest {
         LockerRobot lockerRobot = LockerRobotHelper.createDefaultLockerRobot();
         Bag bag = new Bag();
         Ticket ticket = lockerRobot.save(bag);
-        assertNotNull(ticket);
         Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
+        assertNotNull(ticket);
         assertTrue(locker1.contains(bag));
     }
 
@@ -38,8 +38,8 @@ class LockerRobotTest {
         Bag anotherBag = new Bag();
         lockerRobot.save(bag);
         Ticket ticket = lockerRobot.save(anotherBag);
-        assertNotNull(ticket);
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
+        assertNotNull(ticket);
         assertTrue(locker2.contains(anotherBag));
     }
 }
