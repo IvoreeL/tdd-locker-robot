@@ -31,4 +31,21 @@ class LockerRobotTest {
         assertNotNull(ticket);
         assertTrue(locker1.contains(bag));
     }
+
+    @Test
+    void should_get_a_ticket_and_the_bag_in_locker_2_when_save_a_bag_given_a_robot_with_full_locker_and_empty_locker() throws LockerFullException {
+        LockerRobot lockerRobot = new LockerRobot();
+        ArrayList<Locker> lockers = new ArrayList<>();
+        Bag bag = new Bag();
+        Bag anotherBag = new Bag();
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        lockers.add(locker1);
+        lockers.add(locker2);
+        lockerRobot.inCharge(lockers);
+        lockerRobot.save(bag);
+        Ticket ticket = lockerRobot.save(anotherBag);
+        assertNotNull(ticket);
+        assertTrue(locker2.contains(anotherBag));
+    }
 }
