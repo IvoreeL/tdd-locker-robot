@@ -63,4 +63,12 @@ class LockerTest {
         assertSame(savedBag,retrievedBag);
         assertThrows(InvalidTicketException.class, ()->locker.retrieve(ticket), errorMessage);
     }
+
+    @Test
+    void should_contain_the_bag_when_save_bag_given_a_empty_locker() {
+        Locker locker = new Locker(DEFAULT_LOCKER_CAPACITY);
+        Bag bag = new Bag();
+        locker.save(bag);
+        assertTrue(locker.hasBag(bag));
+    }
 }
