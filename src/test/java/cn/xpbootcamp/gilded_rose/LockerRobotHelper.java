@@ -6,26 +6,30 @@ public class LockerRobotHelper {
     private LockerRobot lockerRobot;
     private static ArrayList<Locker> lockers;
 
-    private LockerRobotHelper(){
-        lockerRobot = new LockerRobot();
-    }
-
-    public static LockerRobot createDefaultLockerRobot() {
-        LockerRobotHelper helper = new LockerRobotHelper();
-        return helper.withDefaultLockers().build();
-    }
-
-    private LockerRobotHelper withDefaultLockers(){
-        Locker locker1 = new Locker(1);
-        Locker locker2 = new Locker(1);
+    private LockerRobotHelper(LockerRobot lockerRobot){
+        this.lockerRobot = lockerRobot ;
         lockers = new ArrayList<>();
-        lockers.add(locker1);
-        lockers.add(locker2);
-        lockerRobot.manage(lockers);
+    }
+
+    public static LockerRobot createDefaultPrimaryLockerRobot() {
+        LockerRobotHelper helper = new LockerRobotHelper(new PrimaryLockerRobot());
+        return helper
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+    }
+
+    public static LockerRobotHelper createDefaultSmartLockerRobot() {
+       return new LockerRobotHelper(new SmartLockerRobot());
+    }
+
+    public LockerRobotHelper withLocker(int capacity){
+        lockers.add(new Locker(capacity));
         return this;
     }
 
-    private LockerRobot build(){
+    public LockerRobot build(){
+        lockerRobot.manage(lockers);
         return lockerRobot;
     }
 

@@ -41,4 +41,8 @@ public class Locker {
     public boolean hasTicket(Ticket ticket) {
         return storage.containsKey(ticket);
     }
+
+    public int getAvailableSize() {
+        return capacity - storage.size();
+    }
 }
