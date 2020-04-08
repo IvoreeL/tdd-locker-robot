@@ -33,10 +33,21 @@ class SmartLockerRobotTest {
                 .withLocker(1)
                 .withLocker(1)
                 .build();
-
         Ticket ticket = smartLockerRobot.save(new Bag());
         Ticket anotherTicket = smartLockerRobot.save(new Bag());
         assertNotEquals(ticket, anotherTicket);
     }
 
+    @Test
+    void should_save_the_bag_in_locker2_when_save_bag_given_a_robot_with_two_different_lockers() {
+        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
+                .withLocker(1)
+                .withLocker(2)
+                .build();
+        Bag bag = new Bag();
+        smartLockerRobot.save(bag);
+        Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
+        assertTrue(locker2.hasBag(bag));
+
+    }
 }
