@@ -44,10 +44,7 @@ class SmartLockerRobotTest {
         assertTrue(locker2.hasBag(bag));
     }
 
-//    given a robot which manages two full lockers(capacity: 1) when user saves a bag then the user would get an error message('柜子已满')
-//    given a valid ticket when retrieves bag then user would get the bag.
-//    given an invalid ticket when retrieves bag then user would get error message('票据无效').
-//    given an used ticket when retrieves bag then user would get error message('票据无效').
+
 
 
     @Test
@@ -75,5 +72,38 @@ class SmartLockerRobotTest {
         smartLockerRobot.save(new Bag());
         smartLockerRobot.save(new Bag());
         assertThrows(LockerFullException.class, ()->smartLockerRobot.save(new Bag()), "柜子已满");
+    }
+
+    @Test
+    void should_get_the_bag_when_user_retrieves_bag_given_a_valid_ticket() {
+        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        Bag savedBag = new Bag();
+        Ticket ticket = smartLockerRobot.save(savedBag);
+        Bag retrievedBag = smartLockerRobot.retrieve(ticket);
+        assertEquals(savedBag, retrievedBag);
+    }
+
+    @Test
+    void should_get_error_message_when_retrieves_bag_given_an_invalid_ticket() {
+        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        smartLockerRobot.save(new Bag());
+        assertThrows(InvalidTicketException.class, () -> smartLockerRobot.retrieve(new Ticket()), "票据无效");
+    }
+
+    @Test
+    void should_get_error_message_when_retrieves_bag_given_an_used_ticket() {
+        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        Ticket ticket = smartLockerRobot.save(new Bag());
+        smartLockerRobot.retrieve(ticket);
+        assertThrows(InvalidTicketException.class, () -> smartLockerRobot.retrieve(ticket), "票据无效");
     }
 }
