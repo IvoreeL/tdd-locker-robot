@@ -18,8 +18,10 @@ public class SmartLockerRobot implements LockerRobot{
         return availableLocker.save(bag);
     }
 
-    @Override
     public Bag retrieve(Ticket ticket) {
-        return null;
+        Locker storedLocker = inChargedLockers.stream()
+                .filter(locker -> locker.hasTicket(ticket))
+                .findFirst().orElseThrow(InvalidTicketException::new);
+        return storedLocker.retrieve(ticket);
     }
 }
