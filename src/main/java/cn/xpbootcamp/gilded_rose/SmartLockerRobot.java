@@ -14,6 +14,7 @@ public class SmartLockerRobot implements LockerRobot{
     public Ticket save(Bag bag) {
         Locker availableLocker = inChargedLockers.stream()
                 .max(Comparator.comparingInt(Locker::getAvailableSize))
+                .filter(Locker::isAvailable)
                 .orElseThrow(LockerFullException::new);
         return availableLocker.save(bag);
     }

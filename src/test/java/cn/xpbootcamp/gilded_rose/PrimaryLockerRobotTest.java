@@ -9,7 +9,6 @@ class PrimaryLockerRobotTest {
     private final static int NUMBER_ONE = 0;
     private final static int NUMBER_TWO = 1;
 
-
     @Test
     void should_get_a_ticket_and_the_bag_in_locker_1_when_save_a_bag_given_a_robot_with_two_empty_lockers() {
         PrimaryLockerRobot primaryLockerRobot = (PrimaryLockerRobot) LockerRobotHelper.createDefaultPrimaryLockerRobot();

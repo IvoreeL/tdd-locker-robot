@@ -22,17 +22,6 @@ class SmartLockerRobotTest {
     }
 
     @Test
-    void should_get_two_different_tickets_when_save_two_bags_given_a_robot_with_two_empty_lockers() {
-        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
-                .withLocker(1)
-                .withLocker(1)
-                .build();
-        Ticket ticket = smartLockerRobot.save(new Bag());
-        Ticket anotherTicket = smartLockerRobot.save(new Bag());
-        assertNotEquals(ticket, anotherTicket);
-    }
-
-    @Test
     void should_save_the_bag_in_locker2_when_save_bag_given_a_robot_with_two_different_lockers() {
         SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
                 .withLocker(1)
@@ -42,25 +31,6 @@ class SmartLockerRobotTest {
         smartLockerRobot.save(bag);
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertTrue(locker2.hasBag(bag));
-    }
-
-
-
-
-    @Test
-    void should_save_the_bag_in_locker1_when_save_bag_given_a_robot_with_empty_locker_and_full_locker() {
-        SmartLockerRobot smartLockerRobot = (SmartLockerRobot) LockerRobotHelper.createDefaultSmartLockerRobot()
-                .withLocker(1)
-                .withLocker(1)
-                .build();
-
-        Ticket ticket = smartLockerRobot.save(new Bag());
-        smartLockerRobot.save(new Bag());
-        smartLockerRobot.retrieve(ticket);
-        Bag bag = new Bag();
-        smartLockerRobot.save(bag);
-        Locker locker1 = LockerRobotHelper.getLocker(NUMBER_ONE);
-        assertTrue(locker1.hasBag(bag));
     }
 
     @Test
