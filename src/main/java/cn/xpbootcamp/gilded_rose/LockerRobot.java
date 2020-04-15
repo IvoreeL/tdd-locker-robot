@@ -2,10 +2,22 @@ package cn.xpbootcamp.gilded_rose;
 
 import java.util.ArrayList;
 
-public interface LockerRobot {
-    void manage(ArrayList<Locker> lockers);
+public abstract class LockerRobot {
 
-    Ticket save(Bag bag);
+    protected ArrayList<Locker> inChargedLockers;
 
-    Bag retrieve(Ticket ticket);
+    protected void manage(ArrayList<Locker> lockers) {
+        this.inChargedLockers = lockers;
+    }
+
+    protected Ticket save(Bag bag) {
+        throw new RuntimeException();
+    }
+
+    protected Bag retrieve(Ticket ticket) {
+        Locker storedLocker = inChargedLockers.stream()
+                .filter(locker -> locker.hasTicket(ticket))
+                .findFirst().orElseThrow(InvalidTicketException::new);
+        return storedLocker.retrieve(ticket);
+    }
 }
