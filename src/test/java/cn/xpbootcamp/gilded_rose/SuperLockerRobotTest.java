@@ -3,12 +3,10 @@ package cn.xpbootcamp.gilded_rose;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 
-//given a robot which manages two full lockers(capacity: 1) when user saves a bag then the user would get an error message('柜子已满')
 //given a valid ticket when retrieves bag then user would get the bag.
 //given an invalid ticket when retrieves bag then user would get error message('票据无效').
 //given an used ticket when retrieves bag then user would get error message('票据无效').
@@ -44,4 +42,16 @@ class SuperLockerRobotTest {
         Locker locker2 = LockerRobotHelper.getLocker(NUMBER_TWO);
         assertTrue(locker2.hasBag(bag));
     }
+
+    @Test
+    void should_get_error_message_when_saving_bag_given_a_robot_with_two_full_lockers() {
+        SuperLockerRobot superLockerRobot = (SuperLockerRobot) LockerRobotHelper.createDefaultSuperLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        superLockerRobot.save(new Bag());
+        superLockerRobot.save(new Bag());
+        assertThrows(LockerFullException.class, ()->superLockerRobot.save(new Bag()), "柜子已满");
+    }
+
 }
