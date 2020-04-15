@@ -23,6 +23,10 @@ public class LockerRobotHelper {
        return new LockerRobotHelper(new SmartLockerRobot());
     }
 
+    public static LockerRobotHelper createDefaultSuperLockerRobot() {
+        return new LockerRobotHelper(new SuperLockerRobot());
+    }
+
     public LockerRobotHelper withLocker(int capacity){
         lockers.add(new Locker(capacity));
         return this;

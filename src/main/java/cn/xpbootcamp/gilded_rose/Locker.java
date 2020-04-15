@@ -45,4 +45,8 @@ public class Locker {
     public int getAvailableSize() {
         return capacity - storage.size();
     }
+
+    public double getAvailableRatio() {
+        return 1.0 * getAvailableSize() / capacity;
+    }
 }
