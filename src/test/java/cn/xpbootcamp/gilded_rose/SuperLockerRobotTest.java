@@ -6,11 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-
-//
-//given an invalid ticket when retrieves bag then user would get error message('票据无效').
-//given an used ticket when retrieves bag then user would get error message('票据无效').
-
 class SuperLockerRobotTest {
 
     private final static int NUMBER_ONE = 0;
@@ -64,5 +59,26 @@ class SuperLockerRobotTest {
         Ticket ticket = superLockerRobot.save(savedBag);
         Bag retrievedBag = superLockerRobot.retrieve(ticket);
         assertEquals(savedBag, retrievedBag);
+    }
+
+    @Test
+    void should_get_error_message_when_retrieves_bag_given_an_invalid_ticket() {
+        SuperLockerRobot superLockerRobot = (SuperLockerRobot) LockerRobotHelper.createDefaultSuperLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        superLockerRobot.save(new Bag());
+        assertThrows(InvalidTicketException.class, () -> superLockerRobot.retrieve(new Ticket()), "票据无效");
+    }
+
+    @Test
+    void should_get_error_message_when_retrieves_bag_given_an_used_ticket() {
+        SuperLockerRobot superLockerRobot = (SuperLockerRobot) LockerRobotHelper.createDefaultSuperLockerRobot()
+                .withLocker(1)
+                .withLocker(1)
+                .build();
+        Ticket ticket = superLockerRobot.save(new Bag());
+        superLockerRobot.retrieve(ticket);
+        assertThrows(InvalidTicketException.class, () -> superLockerRobot.retrieve(ticket), "票据无效");
     }
 }
